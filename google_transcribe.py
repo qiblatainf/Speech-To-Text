@@ -34,13 +34,19 @@ def transcribe(file_path):
     response = client.recognize(config=config, audio=audio)
 
     for result in response.results:
-        print(result.alternatives[0].transcript)
+        # print(result.alternatives[0].transcript)
+        return result.alternatives[0].transcript
         
         
-transcribe(file_path)
-
+STT = transcribe(file_path)
+# print(STT)
 # path = file_path
 # lp = LineProfiler()
 # lp_wrapper = lp(transcribe.__wrapped__)
 # lp_wrapper(path)
 # lp.print_stats()
+
+# print("آپ کیسے ہو")
+
+with open('result.txt', 'w', encoding='utf-8') as f:
+    f.write(STT)
