@@ -3,8 +3,9 @@ from google.cloud import speech_v1p1beta1 as speech
 import soundfile as sf
 from memory_profiler import profile
 from line_profiler import LineProfiler
+from test_accuracy import check_similarity
 
-file_path = "D:/Speech-To-Text/test-data/small.wav"
+file_path = "D:/Speech-To-Text/test-data/medium.wav"
 
 # @profile(precision= 4)
 
@@ -48,10 +49,7 @@ STT = transcribe(file_path)
 
 # print("آپ کیسے ہو")
 
-with open('small_result.txt', 'w', encoding='utf-8') as f:
+with open('./results/medium_result.txt', 'w', encoding='utf-8') as f:
     f.write(STT)
  
-from thefuzz import fuzz   
-small_string = "میں اپنے دفتری کام کے لیے اپنے اردو آڈیو کی جانچ کر رہا ہوں۔ آئیے دیکھتے ہیں کہ تبدیلی کس حد تک درست طریقے سے کام کرتی ہے۔ اس آڈیو میں شامل کل الفاظ اڑتیس ہیں اور آڈیو کا دورانیہ صفر پوائنٹ پانچ سیکنڈ ہے۔"
-
-print(f"Similarity score: {fuzz.ratio(small_string, STT)}")
+check_similarity("medium", STT)
