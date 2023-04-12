@@ -5,7 +5,7 @@ from memory_profiler import profile
 from line_profiler import LineProfiler
 from test_accuracy import check_similarity
 
-file_path = "D:/Speech-To-Text/test-data/medium.wav"
+file_path = "D:/Speech-To-Text/test-data/verysmall.wav"
 
 # @profile(precision= 4)
 
@@ -49,7 +49,7 @@ STT = transcribe(file_path)
 
 # print("آپ کیسے ہو")
 
-with open('./results/medium_result.txt', 'w', encoding='utf-8') as f:
+with open('./results/vsmall_result.txt', 'w', encoding='utf-8') as f:
     f.write(STT)
  
-check_similarity("medium", STT)
+check_similarity("very small", STT)
