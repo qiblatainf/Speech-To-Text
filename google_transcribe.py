@@ -5,12 +5,18 @@ from memory_profiler import profile
 from line_profiler import LineProfiler
 from test_accuracy import check_similarity
 import time
+import ray
 
+import warnings
+warnings.filterwarnings("ignore")
+
+ray.init(num_cpus = 4) 
 start = time.time()
 
 file_path = "D:/Speech-To-Text/test-data/verysmall.wav"
 
 # @profile(precision= 4)
+# @ray.remote
 def transcribe(file_path):
     #accessing the json key file
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "D:\Speech-To-Text\google-key.json"
@@ -33,8 +39,9 @@ def transcribe(file_path):
     for result in response.results:
         return result.alternatives[0].transcript
         
-        
-STT = transcribe(file_path)
+# STT = transcribe(file_path) 
+STT = transcribe.remote(file_path)
+result = ray.get(STT)
 # print(STT)
 # path = file_path
 # lp = LineProfiler()
@@ -48,5 +55,7 @@ STT = transcribe(file_path)
 #     f.write(STT)
  
 # check_similarity("very small", STT)
+print(result)
 stop = time.time()
+
 print("Time Consumed (Latency): {} secs".format(stop - start))

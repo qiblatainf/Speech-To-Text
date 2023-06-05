@@ -1,5 +1,6 @@
 from thefuzz import fuzz 
 
+
 def check_similarity(string_type, STT):  
     if (string_type == "very small"):
         string = "اور اس پہ تھا وہ کہتا ہے"
